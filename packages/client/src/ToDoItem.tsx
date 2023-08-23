@@ -1,8 +1,11 @@
 import styled from "styled-components";
+import { useMUD } from "./MUDContext";
+import { Entity, setComponent } from "@latticexyz/recs";
+import { useComponentValue } from "@latticexyz/react";
 
 type Props = {
-  id: string;
-  content: string;
+  id: Entity;
+  body: string;
   done: boolean;
 }
 
@@ -15,13 +18,35 @@ const ToDoItemWrapper = styled.div`
 `;
 
 
-export function ToDoItem({id, content, done}: Props) {
+export function ToDoItem({id, body, done}: Props) {
+  const {
+    systemCalls: {
+      toggleDone,
+    },
+    components:{
+      ToDo
+    }
+  } = useMUD();
+
+  const toDoData = useComponentValue(ToDo,id);
+  if (!toDoData) return<></>
+
   return (
     <ToDoItemWrapper>
       <span>
-        {content}
+        {body}
       </span>
-      <input type="checkbox" checked={done} onChange={(e) => {}}/>
+      <input type="checkbox" checked={done} onChange={(e) => {
+        ToDo.addOverride('done', {
+          entity: id,
+          value: {
+            ...toDoData,
+            done:!toDoData.done
+
+          }
+        })
+        toggleDone(id);
+      }}/>
     </ToDoItemWrapper>
   )
 }

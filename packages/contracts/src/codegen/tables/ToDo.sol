@@ -23,7 +23,7 @@ bytes32 constant ToDoTableId = _tableId;
 struct ToDoData {
   bool done;
   bytes32 owner;
-  string content;
+  string body;
 }
 
 library ToDo {
@@ -49,7 +49,7 @@ library ToDo {
     string[] memory _fieldNames = new string[](3);
     _fieldNames[0] = "done";
     _fieldNames[1] = "owner";
-    _fieldNames[2] = "content";
+    _fieldNames[2] = "body";
     return ("ToDo", _fieldNames);
   }
 
@@ -143,8 +143,8 @@ library ToDo {
     _store.setField(_tableId, _keyTuple, 1, abi.encodePacked((owner)));
   }
 
-  /** Get content */
-  function getContent(bytes32 key) internal view returns (string memory content) {
+  /** Get body */
+  function getBody(bytes32 key) internal view returns (string memory body) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
@@ -152,8 +152,8 @@ library ToDo {
     return (string(_blob));
   }
 
-  /** Get content (using the specified store) */
-  function getContent(IStore _store, bytes32 key) internal view returns (string memory content) {
+  /** Get body (using the specified store) */
+  function getBody(IStore _store, bytes32 key) internal view returns (string memory body) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
@@ -161,24 +161,24 @@ library ToDo {
     return (string(_blob));
   }
 
-  /** Set content */
-  function setContent(bytes32 key, string memory content) internal {
+  /** Set body */
+  function setBody(bytes32 key, string memory body) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
-    StoreSwitch.setField(_tableId, _keyTuple, 2, bytes((content)));
+    StoreSwitch.setField(_tableId, _keyTuple, 2, bytes((body)));
   }
 
-  /** Set content (using the specified store) */
-  function setContent(IStore _store, bytes32 key, string memory content) internal {
+  /** Set body (using the specified store) */
+  function setBody(IStore _store, bytes32 key, string memory body) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
-    _store.setField(_tableId, _keyTuple, 2, bytes((content)));
+    _store.setField(_tableId, _keyTuple, 2, bytes((body)));
   }
 
-  /** Get the length of content */
-  function lengthContent(bytes32 key) internal view returns (uint256) {
+  /** Get the length of body */
+  function lengthBody(bytes32 key) internal view returns (uint256) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
@@ -186,8 +186,8 @@ library ToDo {
     return _byteLength / 1;
   }
 
-  /** Get the length of content (using the specified store) */
-  function lengthContent(IStore _store, bytes32 key) internal view returns (uint256) {
+  /** Get the length of body (using the specified store) */
+  function lengthBody(IStore _store, bytes32 key) internal view returns (uint256) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
@@ -195,8 +195,8 @@ library ToDo {
     return _byteLength / 1;
   }
 
-  /** Get an item of content (unchecked, returns invalid data if index overflows) */
-  function getItemContent(bytes32 key, uint256 _index) internal view returns (string memory) {
+  /** Get an item of body (unchecked, returns invalid data if index overflows) */
+  function getItemBody(bytes32 key, uint256 _index) internal view returns (string memory) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
@@ -204,8 +204,8 @@ library ToDo {
     return (string(_blob));
   }
 
-  /** Get an item of content (using the specified store) (unchecked, returns invalid data if index overflows) */
-  function getItemContent(IStore _store, bytes32 key, uint256 _index) internal view returns (string memory) {
+  /** Get an item of body (using the specified store) (unchecked, returns invalid data if index overflows) */
+  function getItemBody(IStore _store, bytes32 key, uint256 _index) internal view returns (string memory) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
@@ -213,48 +213,48 @@ library ToDo {
     return (string(_blob));
   }
 
-  /** Push a slice to content */
-  function pushContent(bytes32 key, string memory _slice) internal {
+  /** Push a slice to body */
+  function pushBody(bytes32 key, string memory _slice) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
     StoreSwitch.pushToField(_tableId, _keyTuple, 2, bytes((_slice)));
   }
 
-  /** Push a slice to content (using the specified store) */
-  function pushContent(IStore _store, bytes32 key, string memory _slice) internal {
+  /** Push a slice to body (using the specified store) */
+  function pushBody(IStore _store, bytes32 key, string memory _slice) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
     _store.pushToField(_tableId, _keyTuple, 2, bytes((_slice)));
   }
 
-  /** Pop a slice from content */
-  function popContent(bytes32 key) internal {
+  /** Pop a slice from body */
+  function popBody(bytes32 key) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
     StoreSwitch.popFromField(_tableId, _keyTuple, 2, 1);
   }
 
-  /** Pop a slice from content (using the specified store) */
-  function popContent(IStore _store, bytes32 key) internal {
+  /** Pop a slice from body (using the specified store) */
+  function popBody(IStore _store, bytes32 key) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
     _store.popFromField(_tableId, _keyTuple, 2, 1);
   }
 
-  /** Update a slice of content at `_index` */
-  function updateContent(bytes32 key, uint256 _index, string memory _slice) internal {
+  /** Update a slice of body at `_index` */
+  function updateBody(bytes32 key, uint256 _index, string memory _slice) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
     StoreSwitch.updateInField(_tableId, _keyTuple, 2, _index * 1, bytes((_slice)));
   }
 
-  /** Update a slice of content (using the specified store) at `_index` */
-  function updateContent(IStore _store, bytes32 key, uint256 _index, string memory _slice) internal {
+  /** Update a slice of body (using the specified store) at `_index` */
+  function updateBody(IStore _store, bytes32 key, uint256 _index, string memory _slice) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
@@ -280,8 +280,8 @@ library ToDo {
   }
 
   /** Set the full data using individual values */
-  function set(bytes32 key, bool done, bytes32 owner, string memory content) internal {
-    bytes memory _data = encode(done, owner, content);
+  function set(bytes32 key, bool done, bytes32 owner, string memory body) internal {
+    bytes memory _data = encode(done, owner, body);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
@@ -290,8 +290,8 @@ library ToDo {
   }
 
   /** Set the full data using individual values (using the specified store) */
-  function set(IStore _store, bytes32 key, bool done, bytes32 owner, string memory content) internal {
-    bytes memory _data = encode(done, owner, content);
+  function set(IStore _store, bytes32 key, bool done, bytes32 owner, string memory body) internal {
+    bytes memory _data = encode(done, owner, body);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
@@ -301,12 +301,12 @@ library ToDo {
 
   /** Set the full data using the data struct */
   function set(bytes32 key, ToDoData memory _table) internal {
-    set(key, _table.done, _table.owner, _table.content);
+    set(key, _table.done, _table.owner, _table.body);
   }
 
   /** Set the full data using the data struct (using the specified store) */
   function set(IStore _store, bytes32 key, ToDoData memory _table) internal {
-    set(_store, key, _table.done, _table.owner, _table.content);
+    set(_store, key, _table.done, _table.owner, _table.body);
   }
 
   /** Decode the tightly packed blob using this table's schema */
@@ -326,17 +326,17 @@ library ToDo {
 
       _start = _end;
       _end += _encodedLengths.atIndex(0);
-      _table.content = (string(SliceLib.getSubslice(_blob, _start, _end).toBytes()));
+      _table.body = (string(SliceLib.getSubslice(_blob, _start, _end).toBytes()));
     }
   }
 
   /** Tightly pack full data using this table's schema */
-  function encode(bool done, bytes32 owner, string memory content) internal view returns (bytes memory) {
+  function encode(bool done, bytes32 owner, string memory body) internal view returns (bytes memory) {
     uint40[] memory _counters = new uint40[](1);
-    _counters[0] = uint40(bytes(content).length);
+    _counters[0] = uint40(bytes(body).length);
     PackedCounter _encodedLengths = PackedCounterLib.pack(_counters);
 
-    return abi.encodePacked(done, owner, _encodedLengths.unwrap(), bytes((content)));
+    return abi.encodePacked(done, owner, _encodedLengths.unwrap(), bytes((body)));
   }
 
   /** Encode keys as a bytes32 array using this table's schema */

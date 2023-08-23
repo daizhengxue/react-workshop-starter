@@ -10,8 +10,21 @@ import {
   Footer,
   TextLink,
 } from "./theme";
+import { ToDoForm } from "./ToDoForm";
+import { useMUD } from "./MUDContext";
+import { useEntityQuery } from "@latticexyz/react";
+import { Has, getComponentValueStrict } from "@latticexyz/recs";
+import { ToDoItem } from "./ToDoItem";
 
 export const App = () => {
+  const {
+    components: {
+      ToDo,
+    },
+  } = useMUD();
+
+  const todoIds = useEntityQuery([Has(ToDo)]);
+
   return (
     <Container>
       <AppContainer>
@@ -21,6 +34,12 @@ export const App = () => {
         </HeaderDiv>
 
         <Card>
+          {[...todoIds].map(id =>{
+            const todoData = getComponentValueStrict(ToDo, id);
+
+            return <ToDoItem key={id} id={id} {...todoData}/>
+          })}
+          <ToDoForm />
         </Card>
 
         <Footer>
